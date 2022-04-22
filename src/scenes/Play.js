@@ -11,7 +11,6 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('explosion', './assets/explosion2.png', {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 8});
         this.load.audio('bg_music', './assets/bg_music.wav');
     }
-
     create() {
         // play audio 
         var music = this.sound.add('bg_music');
@@ -69,6 +68,22 @@ class Play extends Phaser.Scene {
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, '$ ' + this.p1Score, scoreConfig);
 
+        // display 'FIRE' UI text
+        let fireConfig = {
+            fontFamily: 'Arial',
+            fontSize: '28px',
+            backgroundColor: '#0f7bdc',
+            color: '#e9de0c',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+
+        this.fireCenter = this.add.text(borderUISize + borderPadding*22.5, borderUISize + borderPadding*2, 'FIRE', fireConfig);
+
         // GAME OVER flag
         this.gameOver = false;
         
@@ -79,8 +94,14 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
+
+        // 60-second timer
+        timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
     }
     update() {
+        // track timer
+        text.setText('Event.progress: ' + timedEvent.getProgress().toString().substr(0, 4) + '\nEvent removed at 10: ' + c);
+
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             music.stop();
@@ -92,6 +113,7 @@ class Play extends Phaser.Scene {
             this.scene.restart();
         }
 
+        // Scrolls BG vertically
         this.starfield.tilePositionY -= 2;
         
         if(!this.gameOver) {
@@ -113,6 +135,14 @@ class Play extends Phaser.Scene {
         if (this.checkCollision(this.p1Rocket, this.ship01)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
+        }
+    }
+
+    // Displays timer
+    onEvent(){
+        c--;
+        if (c == 0){
+            timedEvent.remove(false);
         }
     }
 
@@ -142,6 +172,13 @@ class Play extends Phaser.Scene {
         // score add and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text = '$ ' + this.p1Score;
+        
+        // attempting to randomize explosion sound
+
+        //var index = Math.round(Math.random() * this.sounds.length);
+        //var sound = this.sounds[index];
+        //this.sound.play('sfx_explosion', 'sfx_explosion2', 'sfx_explosion3', 'sfx_explosion4');
         this.sound.play('sfx_explosion');
+        //sound.play();
     }
 }

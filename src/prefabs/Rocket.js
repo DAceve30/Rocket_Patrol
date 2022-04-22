@@ -24,9 +24,19 @@ class Rocket extends Phaser.GameObjects.Sprite {
             this.sfxRocket.play(); // play sfx
         }
         // if fired, move up
+        /*if(this.isFiring && this.y >= borderUISize * 3 + borderPadding) {
+            this.y -= this.moveSpeed;
+        }*/
+
         if(this.isFiring && this.y >= borderUISize * 3 + borderPadding) {
             this.y -= this.moveSpeed;
+            if(keyLEFT.isDown && this.x >= borderUISize + this.width) {
+                this.x -= this.moveSpeed;
+            } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
+                this.x += this.moveSpeed;
+            }
         }
+
         // reset on miss
         if(this.y <= borderUISize * 3 + borderPadding) {
             this.reset();
