@@ -8,8 +8,8 @@ class Play extends Phaser.Scene {
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
-        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
-        this.load.audio('bg_music', './assets/bg_music.mp3');
+        this.load.spritesheet('explosion', './assets/explosion2.png', {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 8});
+        this.load.audio('bg_music', './assets/bg_music.wav');
     }
 
     create() {
@@ -22,7 +22,7 @@ class Play extends Phaser.Scene {
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
         
         // green UI background
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0,0);
+        //this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FFFF).setOrigin(0,0);
 
         // white borders
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
@@ -47,7 +47,7 @@ class Play extends Phaser.Scene {
         // animation config
         this.anims.create({
             key: 'explode',
-            frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 9, first: 0}),
+            frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 8, first: 0}),
             frameRate: 30
         });
 
@@ -56,10 +56,10 @@ class Play extends Phaser.Scene {
 
         // display score
         let scoreConfig = {
-            fontFamily: 'Comic Sans',
+            fontFamily: 'Arial',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#0f7bdc',
+            color: '#e9de0c',
             align: 'right',
             padding: {
                 top: 5,
