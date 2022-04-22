@@ -9,9 +9,15 @@ class Play extends Phaser.Scene {
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.audio('bg_music', './assets/bg_music.mp3');
     }
 
     create() {
+        // play audio 
+        var music = this.sound.add('bg_music');
+        music.setLoop(true);
+        music.play();
+
         // place tile sprite
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
         
@@ -50,7 +56,7 @@ class Play extends Phaser.Scene {
 
         // display score
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Comic Sans',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
@@ -61,7 +67,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, '$ ' + this.p1Score, scoreConfig);
 
         // GAME OVER flag
         this.gameOver = false;
@@ -77,14 +83,16 @@ class Play extends Phaser.Scene {
     update() {
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+            music.stop();
             this.scene.restart();
         }
         
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            music.stop();
             this.scene.restart();
         }
 
-        this.starfield.tilePositionX -= 4;
+        this.starfield.tilePositionY -= 2;
         
         if(!this.gameOver) {
         this.p1Rocket.update();
@@ -133,7 +141,7 @@ class Play extends Phaser.Scene {
         });
         // score add and repaint
         this.p1Score += ship.points;
-        this.scoreLeft.text = this.p1Score;
+        this.scoreLeft.text = '$ ' + this.p1Score;
         this.sound.play('sfx_explosion');
     }
 }
