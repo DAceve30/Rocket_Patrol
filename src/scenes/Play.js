@@ -20,6 +20,12 @@ class Play extends Phaser.Scene {
         music.setLoop(true);
         music.play();
 
+        // Creating sound index for explosion sounds
+        /*this.sounds.push(this.sound.add('exp1', './assets/assets_explosion38.wav'));
+        this.sounds.push(this.sound.add('exp2', './assets/explosion2.wav'));
+        this.sounds.push(this.sound.add('exp3', './assets/explosion3.wav'));
+        this.sounds.push(this.sound.add('exp4', './assets/explosion4.wav'));*/
+
         // place tile sprite
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
 
@@ -223,9 +229,9 @@ class Play extends Phaser.Scene {
         
         // attempting to randomize explosion sound
 
-        //var index = Math.round(Math.random() * this.sounds.length);
-        //var sound = this.sounds[index];
-        //this.sound.play('sfx_explosion', 'sfx_explosion2', 'sfx_explosion3', 'sfx_explosion4');
+        /*var index = Math.round(Math.random() * this.sounds.length);
+        var sound = this.sounds[index];
+        this.sound.play(sound);*/
         this.sound.play('sfx_explosion');
         //sound.play();
     }
