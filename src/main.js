@@ -40,5 +40,9 @@ Points Breakdown:
 - The "racks" asset scrolls separately from the scrolling tile background
 
 Note: There was also an attempt at implementing other functions but none of them worked for me. Considering I'm late with this already I'd rather spend the time trying to work on my group project. Please understand.
+
+Credit: 
+On-screen timer based on advice from Denae & William Morales in the discord's code channel
+
 */
 
